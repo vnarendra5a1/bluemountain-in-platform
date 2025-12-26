@@ -12,13 +12,6 @@ const registery = {
     }
 }
 
-const apiMapper = {
-    [WfUpdatePrimaryMobile.apiPath]: {
-        name: WfUpdatePrimaryMobile.name
-    }
-}
-
 export {
-    registery,
-    apiMapper
+    registery
 }

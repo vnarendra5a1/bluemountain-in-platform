@@ -1,7 +1,6 @@
 import DbLayer from "@dataLayer/dataBaseLayer";
 import {
     registery,
-    apiMapper
 } from "@workflows/index";
 import {
     v4
@@ -73,19 +72,19 @@ export class WorkflowExecutor {
     async invoke(
         payload: {
             request: Record<string, any>,
-            apiPath: string,
+            operationName: string,
             nodeId: string
         }
     ) {
         const {
             request,
-            apiPath,
-            nodeId
+            nodeId,
+            operationName
         } = payload
         // @ts-ignore
-        const wfDetails = apiMapper[apiPath]
-        if (!wfDetails || !wfDetails.name)
-            throw 'Workflow details are not mentioned.'
+        const wfDetails = registery[operationName]
+        if (!wfDetails)
+            throw 'Workflow details are not present.'
         const {
             wfId,
         } = request

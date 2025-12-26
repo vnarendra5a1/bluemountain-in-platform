@@ -22,7 +22,7 @@ app.post("/user/contactUpdate/mobile", async (req: Request, res: Response, next:
     const wfExecutor = new WorkflowExecutor()
     const response = await wfExecutor.invoke({
         request: req.body,
-        apiPath: '/user/contactUpdate/mobile',
+        operationName: 'wf_UpdatePrimaryMobileNumber',
         nodeId: 'node1'
     })
     res.status(200).send(response)
