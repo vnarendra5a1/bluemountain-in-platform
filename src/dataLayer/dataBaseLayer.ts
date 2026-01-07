@@ -1,4 +1,5 @@
 const pg = require('pg');
+import { WorkflowSession } from '@schema/workFlowSession';
 import moment from 'moment'
 
 export default class DbLayer {
@@ -120,6 +121,33 @@ export default class DbLayer {
         } catch (err) {
             console.error(err)
             throw 'Failed to create workflow.'
+        }
+    }
+
+    async createWorkflowSession(
+        payload: WorkflowSession
+    ) {
+        const insertQuery = `insert into ${process.env.DATALAKE_SCHEMA}.workflows (workflow_id, workflow_type, current_step, status, context, created_at, updated_at) VALUES('${payload.wfId}', '${payload.wfId}', '', '${payload.status}', '${JSON.stringify(payload.state)}', 'now()', 'now()')`
+        try {
+            const res = await this.#pool.query(
+                insertQuery
+            );
+        } catch (err) {
+            console.error(err)
+            throw 'Failed to create workflow.'
+        }
+    }
+
+    async updateWorkflowSession(
+        payload: WorkflowSession
+    ) {
+        const updateQuery = `update ${process.env.DATALAKE_SCHEMA}."workflows" set context = '${JSON.stringify(payload.state)}', current_step ='', status = '${payload.status}' where workflow_id='${payload.wfId}'`
+        try {
+            const res = await this.#pool.query(
+                updateQuery
+            );
+        } catch (err) {
+            console.error(err)
         }
     }
 }
