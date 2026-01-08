@@ -21,7 +21,13 @@ class WorkFlowStore {
     async getWorkflow(wfId: string): Promise<WorkflowSession | null> {
         const wf = await this.#dataLayer.getWorkflowDetails(wfId);
         if (!wf) return null
-        return wf
+        const workFlow: WorkflowSession = {
+            wfId: wf.workflow_id,
+            api: "",
+            state: wf.context,
+            status: wf.status
+        }
+        return workFlow
     }
 
     async saveWorkflow(wf: WorkflowSession) {

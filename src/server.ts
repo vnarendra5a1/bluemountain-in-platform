@@ -2,6 +2,7 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from "cors"
 import { WorkflowExecutor } from '@core/workflowExecutor';
+import { updateMobile } from 'routes/updateMobile';
 
 dotenv.config();
 const app: Express = express();
@@ -27,3 +28,5 @@ app.post("/user/contactUpdate/mobile", async (req: Request, res: Response, next:
     })
     res.status(200).send(response)
 })
+
+app.post("/update/mobile", updateMobile)
