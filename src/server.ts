@@ -2,7 +2,7 @@ import express, { Express, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from "cors"
 import { WorkflowExecutor } from '@core/workflowExecutor';
-import { updateMobile } from 'routes/updateMobile';
+import UpdateCustomerContacts from 'routes/updateMobile';
 
 dotenv.config();
 const app: Express = express();
@@ -11,6 +11,7 @@ const environment = process.env.ENV
 app.use(cors());
 app.use(express.json({ limit: '50mb' }));
 app.use(express.urlencoded({ limit: '50mb', extended: true }));
+const updateContacts = new UpdateCustomerContacts()
 
 
 app.listen(port, async () => {
@@ -29,4 +30,4 @@ app.post("/user/contactUpdate/mobile", async (req: Request, res: Response, next:
     res.status(200).send(response)
 })
 
-app.post("/update/mobile", updateMobile)
+app.post("/update/mobile", updateContacts.updateMobile.bind(updateContacts))
