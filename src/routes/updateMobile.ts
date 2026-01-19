@@ -1,4 +1,4 @@
-import { WorkFlow } from "@core/workflow.engine";
+import { WorkFlow } from "@core/workflow/workflow.engine";
 import { Log } from "decorator";
 
 class UpdateCustomerContacts {

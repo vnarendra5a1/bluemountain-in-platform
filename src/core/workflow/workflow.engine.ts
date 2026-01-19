@@ -1,4 +1,4 @@
-import WorkFlowStore from "./wfStore"
+import WorkFlowStore from "../../store/wfStore"
 
 type WorkflowResult<Tout> = {
     response: Tout

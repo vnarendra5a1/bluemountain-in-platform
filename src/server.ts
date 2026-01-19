@@ -1,8 +1,10 @@
 import express, { Express, Request, Response, NextFunction } from 'express';
 import dotenv from 'dotenv';
 import cors from "cors"
-import { WorkflowExecutor } from '@core/workflowExecutor';
+import { WorkflowExecutor } from '@core/workflow/workflowExecutor';
 import UpdateCustomerContacts from 'routes/updateMobile';
+import { initKafka } from 'kafka/kafkaTransport';
+import { startResponseListener } from 'kafka/listener';
 
 dotenv.config();
 const app: Express = express();
@@ -16,6 +18,8 @@ const updateContacts = new UpdateCustomerContacts()
 
 app.listen(port, async () => {
     console.log(`⚡️[server]: Server is running at http://localhost:${port}, pointing to ${environment}`);
+    await initKafka()
+    await startResponseListener()
 });
 
 // TODO this is sample route to check sanity.
