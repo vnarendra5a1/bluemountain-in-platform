@@ -1,19 +1,12 @@
 import { randomUUID } from "crypto"
 import { producer } from "kafka/kafkaTransport"
-import { addRequest } from "store/correlationStore"
+import { ForwardCallOptions } from ".."
 
 
-interface ForwardCallOptions<T> {
-    targetService: string
-    action: string
-    payload: T
-}
-
-export async function forward<TReq, TRes>(
-    opts: ForwardCallOptions<TReq>
-): Promise<TRes> {
-    const requestId = randomUUID()
-    const promise = addRequest(requestId, 5000)
+export async function mqForward<TReq>(
+    opts: ForwardCallOptions<TReq>,
+    requestId: string
+) {
     await producer.send({
         topic: `platform.requests.${opts.targetService}`,
         messages: [
@@ -28,12 +21,10 @@ export async function forward<TReq, TRes>(
             }
         ]
     })
-
-    return promise
 }
 
 
-export async function notify<TReq, TRes>(
+export async function mqNotify<TReq>(
     opts: ForwardCallOptions<TReq>
 ) {
     const requestId = randomUUID()
@@ -50,5 +41,4 @@ export async function notify<TReq, TRes>(
             }
         ]
     })
-
 }
