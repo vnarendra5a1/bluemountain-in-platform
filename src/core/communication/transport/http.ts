@@ -2,12 +2,19 @@
 import axios from "axios"
 import { ForwardCallOptions } from ".."
 import { ServiceConfig } from "../config"
-import { resolveRequest } from "store/correlationStore"
+import { Log } from "@core/utils/Log"
 
-export async function webForward<TReq>(
+/**
+ * 
+ * @param opts - Forward call options.
+ * @param requestId - Unique request id.
+ * 
+ * This method will call specific API and deligate the response back to invoking system.
+ */
+export async function webForward<TReq, TRes>(
     opts: ForwardCallOptions<TReq>,
     requestId: string,
-) {
+): Promise<TRes> {
     const {
         action,
         payload,
@@ -29,27 +36,28 @@ export async function webForward<TReq>(
     } = httpConfig
     headers['Authorization'] = authToken
     let response
-
+    const req = {
+        ...payload,
+        requestId
+    }
     if (method === "GET") {
         response = await axios.get(baseUrl, {
-            params: payload,
-            headers
+            params: req,
+            headers,
+            timeout: 30000
         })
     } else if (method === "POST") {
         response = await axios.post(
             baseUrl,
-            payload,
+            req,
             {
-                headers
-            }
+                headers,
+                timeout: 30000
+            },
         )
     } else {
         throw new Error(`Unsupported HTTP method`)
     }
 
-    resolveRequest(requestId, {
-        status: response.status,
-        statusText: response.statusText,
-        data: response.data
-    })
+    return response.data
 }
