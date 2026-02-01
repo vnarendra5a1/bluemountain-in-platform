@@ -1,8 +1,7 @@
 
 import axios from "axios"
 import { ForwardCallOptions } from ".."
-import { ServiceConfig } from "../config"
-import { Log } from "@core/utils/Log"
+import { getServiceConfig } from "../config"
 
 /**
  * 
@@ -21,7 +20,9 @@ export async function webForward<TReq, TRes>(
         targetService,
         authToken
     } = opts
-    const serviceConfig = ServiceConfig[targetService]
+    const serviceConfig = await getServiceConfig(
+        targetService
+    )
     if (!serviceConfig) {
         throw new Error(`No config found for service: ${targetService}`)
     }
