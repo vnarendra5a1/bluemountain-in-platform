@@ -15,11 +15,11 @@ export default class DbLayer {
 
     async #createPool() {
         const pgConfig = {
-            host: process.env.DATALAKE_HOST,
-            user: process.env.DATALAKE_USER,
-            database: process.env.DATALAKE_DATABASE,
-            password: process.env.DATALAKE_PASSWORD,
-            port: process.env.DATALAKE_PORT,
+            host: process.env.HOST,
+            user: process.env.USER_NAME,
+            database: process.env.DB_NAME,
+            password: process.env.PASSWORD,
+            port: process.env.PORT,
             max: 10, // Maximum number of clients in the pool
             idleTimeoutMillis: 60000, // Idle client timeout
             connectionTimeoutMillis: 120000, // Connection timeout
