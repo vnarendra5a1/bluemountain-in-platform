@@ -6,9 +6,7 @@ const kafka = new Kafka({
 })
 
 export const producer = kafka.producer()
-export const consumer = kafka.consumer({ groupId: "platform-group" })
 
 export async function initKafka() {
     await producer.connect()
-    await consumer.connect()
 }
