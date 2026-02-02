@@ -1,7 +1,7 @@
 
 import axios from "axios"
 import { ForwardCallOptions } from ".."
-import { getServiceConfig } from "../config"
+import { getServiceConfig } from "../../config"
 
 /**
  * 
