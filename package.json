@@ -1,11 +1,11 @@
 {
-  "name": "workflows",
+  "name": "bluemountain-core",
   "version": "1.0.0",
   "description": "Testing workflow service",
-  "type": "commonjs",
-  "main": "./build/server.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "scripts": {
-    "build": "npx tsc && npx tsc-alias",
+    "build": "tsc -p tsconfig.json && tsc-alias",
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "yarn build && node --inspect dist/server.js",
     "prepublishOnly": "npm run build"
@@ -34,5 +34,12 @@
     "tsc-alias": "1.8.6",
     "tslib": "2.6.2",
     "typescript": "5.2.2"
-  }
+  },
+  "exports": {
+      ".": "./dist/index.js",
+      "./*": "./dist/*"
+  },
+  "files": [
+    "dist"
+  ]
 }

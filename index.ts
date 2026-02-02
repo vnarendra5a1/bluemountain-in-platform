@@ -1,7 +1,8 @@
 
 export * from '@core/utils/Log'
 export {
-    forward
+    forward,
+    ForwardCallOptions
 } from '@core/communication'
 export * from '@core/workflow/index'
 export {
