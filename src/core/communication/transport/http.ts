@@ -12,13 +12,14 @@ import { getServiceConfig } from "../../config"
  */
 export async function webForward<TReq, TRes>(
     opts: ForwardCallOptions<TReq>,
-    requestId: string,
+    reqId: string,
 ): Promise<TRes> {
     const {
         action,
         payload,
         targetService,
-        authToken
+        authToken,
+        requestId
     } = opts
     const serviceConfig = await getServiceConfig(
         targetService
@@ -39,7 +40,7 @@ export async function webForward<TReq, TRes>(
     let response
     const req = {
         ...payload,
-        requestId
+        requestId: requestId || reqId
     }
     if (method === "GET") {
         response = await axios.get(baseUrl, {

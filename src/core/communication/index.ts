@@ -9,7 +9,8 @@ export interface ForwardCallOptions<T> {
     action: string
     payload: T,
     mode: "WEB",
-    authToken: string
+    authToken: string,
+    requestId?: string
 }
 
 export async function forward<TReq, TRes>(
