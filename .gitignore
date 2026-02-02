@@ -1,0 +1,19 @@
+**/.DS_Store
+node_modules/**/*
+dist/**/*
+out/**/*
+.vscode/**/*
+.postgres-data
+.redis-data
+.env copy
+.env
+.cache/**/*
+src/prompts/chat1.md
+llmkey-*.txt
+
+**/*.jsonl
+.env.local
+yarn_cache/*
+npm_cache/*
+ngrok.yaml
+package-lock.json

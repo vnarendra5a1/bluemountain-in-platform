@@ -1,0 +1,23 @@
+{
+  "name": "bluemountain-in-platform",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "build": "npx tsc && npx tsc-alias",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "yarn build && node --inspect dist/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "tsc-alias": "^1.8.16",
+    "typescript": "^5.9.3"
+  },
+  "dependencies": {
+    "core": "file:../../core",
+    "etcd3": "^1.1.2",
+    "kafkajs": "^2.2.4"
+  }
+}
