@@ -22,7 +22,8 @@ export async function mqForward<TReq>(
                     requestId,
                     action: opts.action,
                     payload: opts.payload,
-                    replyTo: "platform.responses" // TODO check here.
+                    authToken: opts.authToken,
+                    sourceService: opts.sourceService
                 })
             }
         ]

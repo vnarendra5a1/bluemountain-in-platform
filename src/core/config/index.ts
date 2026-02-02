@@ -9,7 +9,6 @@ const BASE_KEY = "/platform/service-taragets"
 
 export interface HttpConfig {
     serviceName: string,
-    mqTopic: string,
     operations: Record<string, HttpTargetConfig>
 }
 
@@ -28,8 +27,8 @@ export async function loadConfig() {
     for (const key in configData) {
         try {
             const parsed = JSON.parse(configData[key]) as HttpConfig
-            if (parsed.mqTopic) {
-                topics.push(parsed.mqTopic)
+            if (parsed) {
+                topics.push(`platform.requests.${parsed.serviceName}`)
             }
             cachedConfig.set(key, parsed)
         } catch (err) {
