@@ -1,7 +1,7 @@
 import { Kafka } from "kafkajs"
 
 const kafka = new Kafka({
-    clientId: "platform",
+    clientId: `core-${process.env.SERVICENAME}`,
     brokers: ["localhost:9092"]
 })
 
