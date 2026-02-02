@@ -7,7 +7,8 @@
   "scripts": {
     "build": "npx tsc && npx tsc-alias",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "yarn build && node --inspect dist/server.js"
+    "start": "yarn build && node --inspect dist/server.js",
+    "prepublishOnly": "npm run build"
   },
   "author": "Narendra Vaddi",
   "license": "ISC",
