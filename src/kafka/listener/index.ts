@@ -1,6 +1,7 @@
 import { consumer } from "../index"
 import {
-    forward
+    forward,
+    getServiceConfig
 } from "core"
 /**
  * Scenario - 1
@@ -20,7 +21,7 @@ export async function startSubscriptionOnSpecificTopic(topic: string) {
 export async function startSubscription(topics: string[]) {
     await consumer.subscribe({
         topics,
-        fromBeginning: false
+        fromBeginning: false,
     })
 }
 
@@ -34,7 +35,8 @@ async function processMessage(notification: any) {
     console.log("Incoming message notification, onStart");
     const {
         message,
-        topic
+        topic,
+
     } = notification
     if (!message.value) return
     const request = JSON.parse(message.value.toString())
@@ -42,22 +44,28 @@ async function processMessage(notification: any) {
         requestId,
         action,
         payload,
-        authToken
+        sourceService
     } = request
     console.log(`$Process Message topic = ${topic}, request id = ${requestId}, action = ${action}`);
     const serviceName = topic.split(".")[2]
     if (serviceName) {
-        const response = await forward({
-            action,
-            payload,
-            targetService: serviceName,
-            authToken,
-            requestId,
-            mode: "WEB"
-        })
-        console.log("Request processed successfully, ", response);
-    }
-    console.log("Failed to get service name from topic.");
-
+        console.log(" Incoming message payload.", payload);
+        try {
+            const response = await forward({
+                action,
+                payload: JSON.parse(payload),
+                targetService: serviceName,
+                authToken: message.headers?.['Authorization'] || '',
+                requestId,
+                mode: "WEB",
+                sourceService
+            })
+            console.log("Request processed successfully, ", response);
+        } catch (err) {
+            console.error("Error while processing the message ", err);
+            return
+        }
+    } else
+        console.log("Failed to get service name from topic.");
 }
 
