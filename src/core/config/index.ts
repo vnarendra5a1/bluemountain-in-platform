@@ -54,6 +54,22 @@ export async function getServiceConfig(
     return parsed
 }
 
+export async function addTestConfig() {
+    cachedConfig.set("updates", {
+        operations: {
+            'getPolicyDetails': {
+                baseUrl: 'https://qa-myinsurance.tataaia.com/api/policy',
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        },
+        serviceName: 'PolicyServicing'
+    })
+}
+
+
 export async function startHttpConfigWatcher(
     on?: (operation: "PUT" | "DELETE", res: HttpConfig) => void
 ) {

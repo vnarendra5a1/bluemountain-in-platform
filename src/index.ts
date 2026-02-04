@@ -8,4 +8,5 @@ export {
     loadConfig,
     startHttpConfigWatcher,
     notify,
+    addTestConfig
 } from '@core/index'

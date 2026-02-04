@@ -36,7 +36,7 @@ export async function webForward<TReq, TRes>(
         method,
         headers = {}
     } = httpConfig
-    headers['Authorization'] = authToken
+    headers['Authorization'] = `Bearer ${authToken}`
     let response
     const req = {
         ...payload,
