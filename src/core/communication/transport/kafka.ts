@@ -1,4 +1,4 @@
-import { producer } from "kafka/kafkaTransport"
+import { producer } from "kafka"
 import { ForwardCallOptions } from ".."
 
 

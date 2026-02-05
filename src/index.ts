@@ -8,5 +8,9 @@ export {
     loadConfig,
     startHttpConfigWatcher,
     notify,
-    addTestConfig
+    addConfig
 } from '@core/index'
+
+export {
+    initKafka
+} from '@kafka/index'
