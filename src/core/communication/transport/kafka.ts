@@ -1,4 +1,4 @@
-import { producer } from "kafka"
+import { createProducer } from "@kafka/index"
 import { ForwardCallOptions } from ".."
 
 
@@ -13,6 +13,10 @@ export async function mqForward<TReq>(
     opts: ForwardCallOptions<TReq>,
     requestId: string
 ) {
+    const producer = await createProducer({
+        clientId: `core-${opts.sourceService}`,
+        brokers: ["localhost:9092"]
+    })
     await producer.send({
         topic: `platform.requests.${opts.targetService}`,
         messages: [
@@ -44,6 +48,10 @@ export async function mqNotify<TReq, TRes>(
     opts: ForwardCallOptions<TReq>,
     requestId: string
 ): Promise<TRes> {
+    const producer = await createProducer({
+        clientId: `core-${opts.sourceService}`,
+        brokers: ["localhost:9092"]
+    })
     await producer.send({
         topic: `platform.requests.${opts.targetService}`,
         messages: [

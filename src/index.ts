@@ -10,7 +10,3 @@ export {
     notify,
     addConfig
 } from '@core/index'
-
-export {
-    initKafka
-} from '@kafka/index'
