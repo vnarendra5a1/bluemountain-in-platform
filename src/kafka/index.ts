@@ -3,7 +3,6 @@ import {
     loadConfig,
     HttpConfig,
     startHttpConfigWatcher,
-    addTestConfig
 } from "core"
 import { startResponseListener, startSubscription, startSubscriptionOnSpecificTopic } from "./listener"
 
@@ -19,7 +18,7 @@ export const consumer = kafka.consumer({ groupId: "platform-group" })
 export async function init() {
     await consumer.connect()
     // const topics = await loadConfig()
-    const topics = ['platform.requests.updates']
+    const topics = ['platform.requests.updates', 'platform.requests.serviceA', 'platform.requests.serviceB']
     await startSubscription(
         topics
     )
@@ -27,7 +26,6 @@ export async function init() {
     //     on
     // )
     await startResponseListener()
-    addTestConfig()
 }
 
 function on(

@@ -50,10 +50,14 @@ async function processMessage(notification: any) {
     const serviceName = topic.split(".")[2]
     if (serviceName) {
         console.log(" Incoming message payload.", payload);
+        let inComingReq = payload
+        if (typeof payload === 'string') {
+            inComingReq = JSON.parse(payload)
+        }
         try {
             const response = await forward({
                 action,
-                payload: JSON.parse(payload),
+                payload: inComingReq,
                 targetService: serviceName,
                 authToken: message.headers?.['Authorization'] || '',
                 requestId,

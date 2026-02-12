@@ -2,10 +2,41 @@ import express, { Express, Request, Response, ErrorRequestHandler, NextFunction 
 import dotenv from 'dotenv';
 import cors from "cors";
 import { init } from './kafka';
+import { addConfig } from 'core';
 
 dotenv.config();
 
 init().then(() => {
+    addConfig({
+        serviceName: 'serviceA',
+        details: {
+            operations: {
+                'onProposalApproved': {
+                    baseUrl: 'http://localhost:4010/proposal/submit',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            },
+            serviceName: 'Service-A'
+        }
+    })
+    addConfig({
+        serviceName: 'serviceB',
+        details: {
+            operations: {
+                'onProposalSubmitted': {
+                    baseUrl: 'http://localhost:4011/proposal/submitted',
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    }
+                }
+            },
+            serviceName: 'Service-B'
+        }
+    })
     const app: Express = express();
     const port = process.env.PORT;
     const environment = process.env.ENV
